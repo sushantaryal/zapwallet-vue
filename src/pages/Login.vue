@@ -17,7 +17,7 @@ const authenticate = async () => {
     errors.value = {}
     try {
         await login(form)
-        router.push({ path: '/dashboard' })
+        router.push('/transactions')
     } catch (e) {
         errors.value = e?.response?.data?.errors
     }

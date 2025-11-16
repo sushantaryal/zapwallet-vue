@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import LoginView from '@/pages/Login.vue'
 import DashboardView from '@/pages/Dashboard.vue'
+import TransactionView from '@/pages/Transaction.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
@@ -15,8 +16,8 @@ const router = createRouter({
             },
         },
         {
-            path: '/dashboard',
-            component: DashboardView,
+            path: '/transactions',
+            component: TransactionView,
             meta: {
                 requiresAuth: true,
             },
@@ -33,7 +34,7 @@ router.beforeEach(async (to) => {
         return { path: '/' }
     }
     if (to.meta.guest && auth.authenticated) {
-        return { path: '/dashboard' }
+        return { path: '/transactions' }
     }
 })
 
