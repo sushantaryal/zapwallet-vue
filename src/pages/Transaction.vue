@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import axios from 'axios'
 import { useAuth } from '@/composables/useAuth'
 import Navigation from '@/components/Navigation.vue'
+import { useEcho } from '@laravel/echo-vue'
 
 const { user } = useAuth()
 
@@ -37,6 +38,10 @@ async function loadMore() {
     }
 }
 
+const formatDate = (d) => {
+    return new Date(d).toLocaleString()
+}
+
 const formatMoney = (v) => {
     return Number(v).toFixed(2)
 }
@@ -53,10 +58,23 @@ const transfer = async () => {
     try {
         await axios.post('/api/transactions', form)
         processing.value = false
+        form.receiver_id = ''
+        form.amount = 0
     } catch (e) {
         errors.value = e?.response?.data?.errors
     }
 }
+
+useEcho(`user.${user.value.id}`, 'TransactionCreated', (e) => {
+    const transaction = e.transaction
+    if (transaction.sender_id === user.value.id) {
+        balance.value = (Number(balance.value) - (Number(transaction.amount) + Number(transaction.commission_fee))).toFixed(2)
+    }
+    if (transaction.receiver_id === user.value.id) {
+        balance.value = (Number(balance.value) + Number(transaction.amount)).toFixed(2)
+    }
+    transactions.value.data.unshift(transaction)
+})
 </script>
 
 <template>
@@ -78,7 +96,7 @@ const transfer = async () => {
                 <div>
                     <label for="amount" class="block text-sm/6 font-medium text-gray-900">Amount</label>
                     <div class="mt-2">
-                        <input type="number" v-model.number="form.amount" id="amount" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+                        <input type="number" v-model.number="form.amount" step="0.01" min="0.01" id="amount" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
                     </div>
                     <p v-if="errors?.amount" class="mt-1 text-sm text-red-400">
                         {{ errors?.amount[0] }}
@@ -107,7 +125,7 @@ const transfer = async () => {
                         <td class="px-6 py-4">{{ transaction.receiver.name }}</td>
                         <td class="px-6 py-4">{{ formatMoney(transaction.amount) }}</td>
                         <td class="px-6 py-4">{{ formatMoney(transaction.commission_fee) }}</td>
-                        <td class="px-6 py-4">{{ transaction.created_at }}</td>
+                        <td class="px-6 py-4">{{ formatDate(transaction.created_at) }}</td>
                     </tr>
                 </tbody>
             </table>

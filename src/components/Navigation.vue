@@ -25,11 +25,13 @@ const logoutUser = async () => {
             <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
                 <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-4 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent">
                     <li>
-                        <a href="#" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700">Transactions</a>
+                        <router-link :to="{ path: '/transactions' }" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700">Transactions</router-link>
                     </li>
-                    <li>{{ user.name }}</li>
                     <li>
-                        <button type="button" @click.prevent="logoutUser" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md::text-blue-500">Logout</button>
+                        <span class="text-gray-700 text-sm">{{ user.name }}</span>
+                    </li>
+                    <li>
+                        <button type="button" @click.prevent="logoutUser" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md::text-blue-500 cursor-pointer">Logout</button>
                     </li>
                 </ul>
             </div>
