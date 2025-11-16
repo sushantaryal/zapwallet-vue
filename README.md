@@ -1,25 +1,31 @@
-# zapwallet
+# Zapwallet Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+## Link to Zapwallet Backend in Laravel
 
-## Recommended IDE Setup
-
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+https://github.com/sushantaryal/zapwallet
 
 ## Project Setup
+Clone repository
+```sh
+git clone https://github.com/sushantaryal/zapwallet-vue.git zapwallet-frontend
+```
+
+Copy .env.example to .env
+```sh
+cp .env.example .env
+```
+Update .env values with your pusher values
+```
+VITE_PUSHER_APP_ID=
+VITE_PUSHER_APP_KEY=
+VITE_PUSHER_APP_SECRET=
+VITE_PUSHER_APP_CLUSTER=mt1
+VITE_PUSHER_HOST=ws-mt1.pusher.com
+VITE_PUSHER_PORT=443
+VITE_PUSHER_SCHEME=https
+```
+
+Then
 
 ```sh
 npm install
@@ -29,10 +35,4 @@ npm install
 
 ```sh
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
 ```
