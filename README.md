@@ -4,6 +4,8 @@
 
 https://github.com/sushantaryal/zapwallet
 
+### After backend setup is complete follow the instruction below for frontend setup
+
 ## Project Setup
 Clone repository
 ```sh
