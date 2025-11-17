@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth', {
 
             try {
                 await axios.post('/login', credentials)
-                attempt()
+                this.attempt()
             } catch (e) {
                 throw e
             } finally {
